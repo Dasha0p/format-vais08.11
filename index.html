@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>Circle Calculator</title>
+  <style>
+    body { font-family: sans-serif; padding: 20px; max-width: 600px; }
+    input, button { display: block; margin-top: 10px; padding: 6px; }
+    .result { margin-top: 12px; font-weight: bold; }
+    .error { color: red; }
+  </style>
+</head>
+<body>
+  <h1>Circle Calculator</h1>
+
+  <label for="radius">Radius (r):</label>
+  <input id="radius" type="number" step="any" placeholder="Enter radius">
+
+  <button id="circBtn">Calculate circumference (2πr)</button>
+  <button id="areaBtn">Calculate area (πr²)</button>
+
+  <div id="output" class="result"></div>
+
+  <script>
+    const radiusInput = document.getElementById('radius');
+    const circBtn = document.getElementById('circBtn');
+    const areaBtn = document.getElementById('areaBtn');
+    const output = document.getElementById('output');
+
+    function readRadius() {
+      const r = parseFloat(radiusInput.value);
+      if (isNaN(r)) {
+        output.innerHTML = '<span class="error">Please enter a number.</span>';
+        return null;
+      }
+      if (r < 0) {
+        output.innerHTML = '<span class="error">Radius cannot be negative.</span>';
+        return null;
+      }
+      return r;
+    }
+
+    circBtn.addEventListener('click', function() {
+      const r = readRadius();
+      if (r === null) return;
+      const length = 2 * Math.PI * r;
+      output.innerHTML = `Circumference = <strong>${length.toFixed(3)}</strong>`;
+    });
+
+    areaBtn.addEventListener('click', function() {
+      const r = readRadius();
+      if (r === null) return;
+      const area = Math.PI * r * r;
+      output.innerHTML = `Area = <strong>${area.toFixed(3)}</strong>`;
+    });
+  </script>
+</body>
+</html>
